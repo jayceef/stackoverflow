@@ -1,0 +1,68 @@
+<h2> Question: </h2>
+<h4><%= @question.title %>:
+<br>
+<%= @question.text %></h4>
+
+
+<h2> Answers: </h2>
+<div class="answer_container">
+  <table class="answers_table">
+<% @answer.each do |answer|%>
+  <tr>
+  <% if answer.question_id == @question.id %>
+ <h5> <%= answer.title %>:
+  <%= answer.text %>
+  <%= link_to 'Delete', question_answer_path(@question, answer), method: :delete, data: { confirm: 'Are you sure?' } %>
+
+
+    <%if answer.voteup %>
+      <%= (answer.voteup.to_i - answer.votedown.to_i) %>
+    <%end%>
+  <%= link_to 'Vote Up!', upvote_answer_path(answer), method: :post %>
+  <%= link_to 'Vote Down!', downvote_answer_path(answer), method: :post %>
+  </h5>
+
+  <% end %>
+</tr>
+  <hr>
+
+<% end %>
+
+</table>
+</div>
+
+
+<div class="newanswercontainer">
+<%= form_for [@question, @answer.new], class: "answerform" do |f| %>
+
+
+
+  <p>
+    <%= f.label :title %><br>
+    <%= f.text_field :title %>
+  </p>
+
+  <p>
+    <%= f.label :text %><br>
+    <%= f.text_area :text %>
+  </p>
+
+  <p>
+    <%= f.submit %>
+  </p>
+
+<% end %>
+</div>
+
+
+<%= link_to 'Back', :back %>
+
+
+
+<br><br>
+<%= link_to 'New Answer', question_answers_path(@question) %>
+
+<br><br><br>
+<%= link_to 'Delete', question_path(@question),
+                    method: :delete, data: { confirm: 'Are you sure?' } %>
+<%= link_to 'Back', questions_path %>

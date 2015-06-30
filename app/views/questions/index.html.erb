@@ -1,0 +1,46 @@
+<h1> Questions Index </h1>
+<div class="zen">
+  <% if @zen %>
+   <h3> <em> <%= @zen %> </em> </h3>
+  <% else %>
+   <h3> <em> <%= @notworthy %> </em> </h3>
+  <% end %>
+</div>
+
+
+<div class="container">
+<table class="list">
+<% @questions.each do |question| %>
+  <br><br>
+  <%= link_to question.title, question_path(question) %>
+  <br>
+    <div id="<%= question.id %>" class="votes">
+     <% if @votes %>
+        <%= @votes %>
+     <% else %>
+       <%= (question.voteup - question.votedown) %> likes
+     <% end %>
+    </div>
+    <div class="voteup">
+      <%= link_to 'Vote Up!', upvote_question_path(question) %>
+    </div>
+    <div class="votedown">
+      <%= link_to 'Vote Down!', downvote_question_path(question) %>
+    </div>
+  <%= link_to 'Edit', edit_question_path(question) %>
+  <hr>
+
+  <% end %>
+</table>
+</div>
+
+<br><br><br><br>
+<h2 id="newqbutton">
+  <%= link_to 'New Question', new_question_path %>
+</h2>
+
+
+
+<div class="newquestion">
+  <%= render "questions/new" %>
+</div>

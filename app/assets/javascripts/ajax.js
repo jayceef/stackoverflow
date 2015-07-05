@@ -11,12 +11,13 @@ var newAnswer = function(){
   $(".new_answer").on('submit', function(event){
     event.preventDefault()
     console.log("clicked")
-
-
+console.log('clicked')
     formdata = $(this).serialize()
     console.log("before")
     console.log(formdata)
     console.log("after")
+    console.log("after again")
+
 
     $.ajax({
       url: '/answers/',
